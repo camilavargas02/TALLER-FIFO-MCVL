@@ -30,6 +30,6 @@ BEGIN
         END IF;
     END PROCESS;
     
-    -- Lectura asíncrona
+    
     r_data <= array_reg(to_integer(unsigned(r_addr)));
 END ARCHITECTURE;
