@@ -32,7 +32,7 @@ BEGIN
     -- Operación combinada de escritura y lectura
     wr_op <= wr & rd;
 
-    -- Registro secuencial para los apuntadores y banderas de estado
+    
     PROCESS (clk, reset)
     BEGIN
         IF (reset = '1') THEN
@@ -48,7 +48,7 @@ BEGIN
         END IF;
     END PROCESS;
 
-    -- Lógica de estado siguiente para apuntadores y banderas
+    
     PROCESS(w_ptr_reg, w_ptr_succ, r_ptr_reg, r_ptr_succ, wr_op, empty_reg, full_reg)
     BEGIN
         w_ptr_next <= w_ptr_reg;
@@ -57,10 +57,10 @@ BEGIN
         empty_next <= empty_reg;
 
         CASE wr_op IS
-            WHEN "00" => -- No op
+            WHEN "00" => 
                 NULL;
 
-            WHEN "01" => -- Read
+            WHEN "01" => 
                 IF (empty_reg = '0') THEN
                     r_ptr_next <= r_ptr_succ;
                     full_next  <= '0';
@@ -69,7 +69,7 @@ BEGIN
                     END IF;
                 END IF;
 
-            WHEN "10" => -- Write
+            WHEN "10" => 
                 IF (full_reg = '0') THEN
                     w_ptr_next <= w_ptr_succ;
                     empty_next <= '0';
@@ -78,7 +78,7 @@ BEGIN
                     END IF;
                 END IF;
 
-            WHEN OTHERS => -- Write / Read simultaneos ("11")
+            WHEN OTHERS => 
                 IF (empty_reg = '1') THEN
                     w_ptr_next <= w_ptr_succ;
                     empty_next <= '0';
@@ -92,7 +92,7 @@ BEGIN
         END CASE;
     END PROCESS;
 
-    -- Asignación de salidas
+    
     w_addr      <= w_ptr_reg;
     r_addr      <= r_ptr_reg;
     full        <= full_reg;
