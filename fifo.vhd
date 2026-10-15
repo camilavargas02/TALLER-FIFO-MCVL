@@ -26,11 +26,11 @@ ARCHITECTURE structural OF fifo IS
     SIGNAL r_addr_s : STD_LOGIC_VECTOR (ADDR_WIDTH-1 DOWNTO 0);
 BEGIN
 
-    -- Write enable solo cuando la FIFO no está llena[cite: 4]
+   
     wr_en_s <= wr AND (NOT full_s);
     full    <= full_s;
 
-    -- Instanciación de la unidad de control (fifo_ctrl)[cite: 4]
+    
     ctrl_unit: ENTITY work.fifo_ctrl
         GENERIC MAP (
             ADDR_WIDTH => ADDR_WIDTH
@@ -47,7 +47,7 @@ BEGIN
             r_addr_next => OPEN
         );
 
-    -- Instanciación del archivo de registros (register_file)[cite: 4]
+    
     reg_file_unit: ENTITY work.register_file
         GENERIC MAP (
             ADDR_WIDTH => ADDR_WIDTH,
