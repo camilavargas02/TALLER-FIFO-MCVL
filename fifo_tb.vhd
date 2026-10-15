@@ -6,7 +6,7 @@ ENTITY fifo_tb IS
 END ENTITY;
 
 ARCHITECTURE sim OF fifo_tb IS
-    CONSTANT ADDR_WIDTH : INTEGER := 3; -- 8 posiciones (2^3 = 8)[cite: 2, 3]
+    CONSTANT ADDR_WIDTH : INTEGER := 3; 
     CONSTANT DATA_WIDTH : INTEGER := 8;
     CONSTANT CLK_PERIOD : TIME := 10 ns;
 
@@ -21,7 +21,7 @@ ARCHITECTURE sim OF fifo_tb IS
 
 BEGIN
 
-    -- Instanciación del top-level entity (fifo)
+    
     uut: ENTITY work.fifo
         GENERIC MAP (
             ADDR_WIDTH => ADDR_WIDTH,
@@ -38,7 +38,7 @@ BEGIN
             r_data => r_data
         );
 
-    -- Generador de Reloj
+    
     clk_process: PROCESS
     BEGIN
         clk <= '0';
@@ -47,7 +47,7 @@ BEGIN
         WAIT FOR CLK_PERIOD / 2;
     END PROCESS;
 
-    -- Proceso de estímulos basado en la Figura 3
+    
     stimulus_process: PROCESS
         PROCEDURE write_fifo(data_val : IN INTEGER) IS
         BEGIN
@@ -71,7 +71,7 @@ BEGIN
             rd <= '0';
         END PROCEDURE;
     BEGIN
-        -- (a) Inicial (vacía)[cite: 3]
+        
         reset <= '1';
         wr <= '0';
         rd <= '0';
@@ -79,38 +79,38 @@ BEGIN
         reset <= '0';
         WAIT FOR CLK_PERIOD;
 
-        -- (b) Después de 1 escritura[cite: 3]
+        
         write_fifo(11);
 
-        -- (c) 3 escrituras más[cite: 3]
+        
         write_fifo(22);
         write_fifo(33);
         write_fifo(44);
 
-        -- (d) Después de 1 lectura[cite: 3]
+        
         read_fifo;
 
-        -- (e) 4 escrituras más[cite: 3]
+        
         write_fifo(55);
         write_fifo(66);
         write_fifo(77);
         write_fifo(88);
 
-        -- (f) 1 escritura más (llena)[cite: 3]
+        
         write_fifo(99);
 
-        -- (g) 2 lecturas[cite: 3]
+        
         read_fifo;
         read_fifo;
 
-        -- (h) 5 lecturas más[cite: 3]
+        
         read_fifo;
         read_fifo;
         read_fifo;
         read_fifo;
         read_fifo;
 
-        -- (i) 1 lectura más (vacía)[cite: 3]
+        
         read_fifo;
 
         nop_fifo;
